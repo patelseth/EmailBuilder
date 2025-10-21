@@ -40,5 +40,21 @@ namespace EmailBuilderApi.UnitTests
             // Act & Assert
             await Assert.ThrowsAsync<ArgumentException>(() => service.SendEmailAsync(htmlContent, recipient));
         }
+
+        /// <summary>
+        /// Should throw an exception if HTML content is empty.
+        /// </summary>
+        [Fact]
+        public async Task SendEmailAsync_WithEmptyHtmlContent_ThrowsArgumentException()
+        {
+            // Arrange
+            var mockEmailSenderClient = new Mock<IEmailSenderClient>();
+            var service = new EmailSenderService(mockEmailSenderClient.Object);
+            var htmlContent = string.Empty;
+            var recipient = "test@example.com";
+
+            // Act & Assert
+            await Assert.ThrowsAsync<ArgumentException>(() => service.SendEmailAsync(htmlContent, recipient));
+        }
     }
 }
