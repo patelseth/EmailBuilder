@@ -19,6 +19,10 @@ namespace EmailBuilderApi.Application
         /// <param name="recipient">The recipient's email address.</param>
         public async Task SendEmailAsync(string htmlContent, string recipient)
         {
+            // Validate recipient
+            if (string.IsNullOrWhiteSpace(recipient))
+                throw new ArgumentException("Recipient email address must not be empty.", nameof(recipient));
+
             // Delegates the actual sending to the injected client, supporting OCP and testability.
             await emailSenderClient.SendEmailAsync(htmlContent, recipient);
         }
