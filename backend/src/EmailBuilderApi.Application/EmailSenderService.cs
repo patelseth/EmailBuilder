@@ -22,6 +22,16 @@ namespace EmailBuilderApi.Application
             if (string.IsNullOrWhiteSpace(recipient))
                 throw new ArgumentException("Recipient email address must not be empty.", nameof(recipient));
 
+            // Improved email format validation
+            int atIndex = recipient.IndexOf('@');
+            if (atIndex <= 0 || atIndex == recipient.Length - 1)
+                throw new ArgumentException("Recipient email address format is invalid.", nameof(recipient));
+
+            string domain = recipient[(atIndex + 1)..];
+            int dotIndex = domain.IndexOf('.');
+            if (dotIndex <= 0 || dotIndex == domain.Length - 1)
+                throw new ArgumentException("Recipient email address format is invalid.", nameof(recipient));
+
             // Validate HTML content
             if (string.IsNullOrWhiteSpace(htmlContent))
                 throw new ArgumentException("Email HTML content must not be empty.", nameof(htmlContent));
