@@ -78,5 +78,25 @@ namespace EmailBuilderApi.UnitTests
             var ex = await Assert.ThrowsAsync<InvalidOperationException>(() => service.SendEmailAsync(htmlContent, recipient));
             Assert.Equal(expectedException, ex);
         }
+
+        /// <summary>
+        /// Should throw an exception if recipient email format is invalid.
+        /// </summary>
+        [Theory]
+        [InlineData("plainaddress")]
+        [InlineData("missingatsign.com")]
+        [InlineData("@missingusername.com")]
+        [InlineData("username@.com")]
+        [InlineData("username@com")]
+        public async Task SendEmailAsync_WithInvalidRecipientFormat_ThrowsArgumentException(string invalidRecipient)
+        {
+            // Arrange
+            var mockEmailSenderClient = new Mock<IEmailSenderClient>();
+            var service = new EmailSenderService(mockEmailSenderClient.Object);
+            var htmlContent = "<h1>Hello</h1>";
+
+            // Act & Assert
+            await Assert.ThrowsAsync<ArgumentException>(() => service.SendEmailAsync(htmlContent, invalidRecipient));
+        }
     }
 }
