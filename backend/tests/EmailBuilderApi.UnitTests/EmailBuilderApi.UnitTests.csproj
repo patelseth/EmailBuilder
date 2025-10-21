@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\EmailBuilderApi.Api\EmailBuilderApi.Api.csproj" />
+    <ProjectReference Include="..\..\src\EmailBuilderApi.Application\EmailBuilderApi.Application.csproj" />
   </ItemGroup>
 
 </Project>

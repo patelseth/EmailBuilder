@@ -1,0 +1,26 @@
+namespace EmailBuilderApi.Application
+{
+
+    /// <summary>
+    /// Service responsible for sending emails using an injected email client.
+    /// Adheres to Single Responsibility Principle (SRP) and Dependency Inversion Principle (DIP).
+    /// </summary>
+    /// <remarks>
+    /// Constructor injects the email client dependency.
+    /// </remarks>
+    /// <param name="emailSenderClient">An implementation of IEmailSenderClient.</param>
+    public class EmailSenderService(IEmailSenderClient emailSenderClient) : IEmailSenderService
+    {
+
+        /// <summary>
+        /// Sends an email with the provided HTML content to the recipient.
+        /// </summary>
+        /// <param name="htmlContent">The HTML body of the email.</param>
+        /// <param name="recipient">The recipient's email address.</param>
+        public async Task SendEmailAsync(string htmlContent, string recipient)
+        {
+            // Delegates the actual sending to the injected client, supporting OCP and testability.
+            await emailSenderClient.SendEmailAsync(htmlContent, recipient);
+        }
+    }
+}

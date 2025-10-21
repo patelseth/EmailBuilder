@@ -1,22 +1,25 @@
 using Moq;
+using EmailBuilderApi.Application;
 
-namespace EmailBuilderApi.UnitTests;
-
-public class EmailSenderServiceTests
+namespace EmailBuilderApi.UnitTests
 {
-    [Fact]
-    public async Task SendEmailAsync_WithValidInput_CallsSendGridApi()
+
+    public class EmailSenderServiceTests
     {
-        // Arrange
-        var mockSendGridClient = new Mock<ISendGridClient>();
-        var service = new EmailSenderService(mockSendGridClient.Object);
-        var htmlContent = "<h1>Hello</h1>";
-        var recipient = "test@example.com";
+        [Fact]
+        public async Task SendEmailAsync_WithValidInput_CallsSendGridApi()
+        {
+            // Arrange
+            var mockEmailSenderClient = new Mock<IEmailSenderClient>();
+            var service = new EmailSenderService(mockEmailSenderClient.Object);
+            var htmlContent = "<h1>Hello</h1>";
+            var recipient = "test@example.com";
 
-        // Act
-        var result = await service.SendEmailAsync(htmlContent, recipient);
+            // Act
+            await service.SendEmailAsync(htmlContent, recipient);
 
-        // Assert
-        mockSendGridClient.Verify(x => x.SendEmailAsync(htmlContent, recipient), Times.Once);
+            // Assert
+            mockEmailSenderClient.Verify(x => x.SendEmailAsync(htmlContent, recipient), Times.Once);
+        }
     }
 }
