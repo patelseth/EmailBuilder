@@ -56,5 +56,27 @@ namespace EmailBuilderApi.UnitTests
             // Act & Assert
             await Assert.ThrowsAsync<ArgumentException>(() => service.SendEmailAsync(htmlContent, recipient));
         }
+
+        /// <summary>
+        /// Should propagate exceptions thrown by the email provider.
+        /// </summary>
+        [Fact]
+        public async Task SendEmailAsync_WhenProviderThrows_PropagatesException()
+        {
+            // Arrange
+            var mockEmailSenderClient = new Mock<IEmailSenderClient>();
+            var service = new EmailSenderService(mockEmailSenderClient.Object);
+            var htmlContent = "<h1>Hello</h1>";
+            var recipient = "test@example.com";
+            var expectedException = new InvalidOperationException("Provider failure");
+
+            mockEmailSenderClient
+                .Setup(x => x.SendEmailAsync(htmlContent, recipient))
+                .ThrowsAsync(expectedException);
+
+            // Act & Assert
+            var ex = await Assert.ThrowsAsync<InvalidOperationException>(() => service.SendEmailAsync(htmlContent, recipient));
+            Assert.Equal(expectedException, ex);
+        }
     }
 }
