@@ -11,7 +11,6 @@ namespace EmailBuilderApi.Application
     /// <param name="emailSenderClient">An implementation of IEmailSenderClient.</param>
     public class EmailSenderService(IEmailSenderClient emailSenderClient) : IEmailSenderService
     {
-
         /// <summary>
         /// Sends an email with the provided HTML content to the recipient.
         /// </summary>
@@ -22,6 +21,10 @@ namespace EmailBuilderApi.Application
             // Validate recipient
             if (string.IsNullOrWhiteSpace(recipient))
                 throw new ArgumentException("Recipient email address must not be empty.", nameof(recipient));
+
+            // Validate HTML content
+            if (string.IsNullOrWhiteSpace(htmlContent))
+                throw new ArgumentException("Email HTML content must not be empty.", nameof(htmlContent));
 
             // Delegates the actual sending to the injected client, supporting OCP and testability.
             await emailSenderClient.SendEmailAsync(htmlContent, recipient);
