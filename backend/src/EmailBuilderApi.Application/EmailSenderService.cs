@@ -16,8 +16,11 @@ namespace EmailBuilderApi.Application
         /// </summary>
         /// <param name="htmlContent">The HTML body of the email.</param>
         /// <param name="recipient">The recipient's email address.</param>
-        public async Task SendEmailAsync(string htmlContent, string recipient)
+        public async Task SendEmailAsync(string htmlContent, string? recipient)
         {
+            // Trim whitespace from recipient
+            recipient = recipient?.Trim();
+
             // Validate recipient
             if (string.IsNullOrWhiteSpace(recipient))
                 throw new ArgumentException("Recipient email address must not be empty.", nameof(recipient));
