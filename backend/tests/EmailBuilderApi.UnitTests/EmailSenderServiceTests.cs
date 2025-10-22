@@ -98,5 +98,24 @@ namespace EmailBuilderApi.UnitTests
             // Act & Assert
             await Assert.ThrowsAsync<ArgumentException>(() => service.SendEmailAsync(htmlContent, invalidRecipient));
         }
+
+        /// <summary>
+        /// Should trim whitespace from recipient email address before sending.
+        /// </summary>
+        [Fact]
+        public async Task SendEmailAsync_TrimsWhitespaceFromRecipient_BeforeSending()
+        {
+            // Arrange
+            var mockEmailSenderClient = new Mock<IEmailSenderClient>();
+            var service = new EmailSenderService(mockEmailSenderClient.Object);
+            var htmlContent = "<h1>Hello</h1>";
+            var recipient = "   test@example.com   ";
+
+            // Act
+            await service.SendEmailAsync(htmlContent, recipient);
+
+            // Assert
+            mockEmailSenderClient.Verify(x => x.SendEmailAsync(htmlContent, "test@example.com"), Times.Once);
+        }
     }
 }
