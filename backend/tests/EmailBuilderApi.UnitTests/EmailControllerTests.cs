@@ -58,5 +58,59 @@ namespace EmailBuilderApi.UnitTests
             mockEmailSenderService.Verify(x => x.SendEmailAsync(htmlContent, recipient, subject, cc, bcc, attachments), Times.Once);
             Assert.IsType<OkResult>(result);
         }
+
+        [Theory]
+        [InlineData(null)]
+        [InlineData("")]
+        [InlineData("   ")]
+        public async Task SendEmail_MissingOrEmptyRecipient_ReturnsBadRequest(string? recipient)
+        {
+            // Arrange
+            var mockEmailSenderService = new Mock<IEmailSenderService>();
+            var controller = new EmailController(mockEmailSenderService.Object);
+            var request = new SendEmailRequest { HtmlContent = "<h1>Hello</h1>", Recipient = recipient! };
+
+            // Act
+            var result = await controller.SendEmail(request);
+
+            // Assert
+            Assert.IsType<BadRequestObjectResult>(result);
+        }
+
+        [Theory]
+        [InlineData(null)]
+        [InlineData("")]
+        [InlineData("   ")]
+        public async Task SendEmail_MissingOrEmptyHtmlContent_ReturnsBadRequest(string? htmlContent)
+        {
+            // Arrange
+            var mockEmailSenderService = new Mock<IEmailSenderService>();
+            var controller = new EmailController(mockEmailSenderService.Object);
+            var request = new SendEmailRequest { HtmlContent = htmlContent!, Recipient = "test@example.com" };
+
+            // Act
+            var result = await controller.SendEmail(request);
+
+            // Assert
+            Assert.IsType<BadRequestObjectResult>(result);
+        }
+
+        [Fact]
+        public async Task SendEmail_WhenServiceThrows_ReturnsInternalServerError()
+        {
+            // Arrange
+            var mockEmailSenderService = new Mock<IEmailSenderService>();
+            mockEmailSenderService.Setup(x => x.SendEmailAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<List<string>>(), It.IsAny<List<string>>(), It.IsAny<List<EmailAttachment>>()))
+                .ThrowsAsync(new Exception("Unexpected error"));
+            var controller = new EmailController(mockEmailSenderService.Object);
+            var request = new SendEmailRequest { HtmlContent = "<h1>Hello</h1>", Recipient = "test@example.com" };
+
+            // Act
+            var result = await controller.SendEmail(request);
+
+            // Assert
+            var objectResult = Assert.IsType<ObjectResult>(result);
+            Assert.Equal(500, objectResult.StatusCode);
+        }
     }
 }
