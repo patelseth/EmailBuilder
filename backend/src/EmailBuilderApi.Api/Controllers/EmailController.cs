@@ -23,14 +23,31 @@ namespace EmailBuilderApi.Api.Controllers
         [HttpPost("send")]
         public async Task<IActionResult> SendEmail([FromBody] SendEmailRequest request)
         {
-            await emailSenderService.SendEmailAsync(
-                request.HtmlContent,
-                request.Recipient,
-                request.Subject,
-                request.Cc,
-                request.Bcc,
-                request.Attachments);
-            return Ok();
+            // Input validation
+            if (string.IsNullOrWhiteSpace(request.Recipient))
+                return BadRequest("Recipient is required.");
+            if (string.IsNullOrWhiteSpace(request.HtmlContent))
+                return BadRequest("HTML content is required.");
+
+            try
+            {
+                await emailSenderService.SendEmailAsync(
+                    request.HtmlContent,
+                    request.Recipient,
+                    request.Subject,
+                    request.Cc,
+                    request.Bcc,
+                    request.Attachments);
+                return Ok();
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
     }
 }
