@@ -16,23 +16,120 @@
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
 
-.App-link {
-  color: #61dafb;
-}
+  /* EmailBuilder App Custom Styles */
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+  body {
+    background: #f7f8fa;
+    font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
   }
-  to {
-    transform: rotate(360deg);
+
+  .App {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .email-builder-container {
+    background: #fff;
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 2rem 1.5rem 2.5rem 1.5rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    border: 1px solid #e5e7eb;
+  }
+
+  .email-builder-container h2 {
+    margin-top: 0;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #22223b;
+    margin-bottom: 1.5rem;
+  }
+
+  .email-builder-container label {
+    font-weight: 500;
+    color: #22223b;
+    margin-bottom: 0.25rem;
+    display: block;
+  }
+
+  .email-builder-container input[type="email"],
+  .email-builder-container input[type="text"] {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    background: #f9fafb;
+    transition: border 0.2s;
+  }
+
+  .email-builder-container input:focus {
+    border: 1.5px solid #4f8cff;
+    outline: none;
+  }
+
+  .email-builder-container button {
+    background: linear-gradient(90deg, #4f8cff 0%, #38b6ff 100%);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 0.75rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 0.5rem;
+    box-shadow: 0 2px 8px rgba(79,140,255,0.08);
+    transition: background 0.2s, box-shadow 0.2s;
+  }
+
+  .email-builder-container button:disabled {
+    background: #b6c6e3;
+    cursor: not-allowed;
+  }
+
+  .email-builder-container .status-message {
+    margin-top: 1.25rem;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #38b6ff;
+    text-align: center;
+  }
+
+  @media (max-width: 700px) {
+    .email-builder-container {
+      max-width: 98vw;
+      padding: 1rem 0.5rem 1.5rem 0.5rem;
+      border-radius: 10px;
+    }
+    .email-builder-container h2 {
+      font-size: 1.3rem;
+    }
+  }
+
+  /* Unlayer editor responsive fix */
+  #unlayer-editor, [id^="unlayer-editor-"] {
+    min-width: 0;
+    width: 100% !important;
+    max-width: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #f4f6fb;
+    box-shadow: 0 2px 8px rgba(56,182,255,0.04);
+  }
+
+  @media (max-width: 600px) {
+    #unlayer-editor, [id^="unlayer-editor-"] {
+      min-width: 0;
+      width: 100vw !important;
+      margin-left: -8vw;
+      border-radius: 6px;
+    }
   }
 }

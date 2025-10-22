@@ -38,9 +38,9 @@ const EmailBuilder: React.FC = () => {
   };
 
   return (
-    <div style={{ maxWidth: 700, margin: '2rem auto', padding: 24, border: '1px solid #eee', borderRadius: 8 }}>
+    <div className="email-builder-container">
       <h2>Email Builder</h2>
-      <div style={{ marginBottom: 16 }}>
+      <div>
         <label htmlFor="recipient">Recipient Email:</label>
         <input
           id="recipient"
@@ -48,10 +48,9 @@ const EmailBuilder: React.FC = () => {
           placeholder="Enter recipient email"
           value={recipient}
           onChange={e => setRecipient(e.target.value)}
-          style={{ width: '100%', padding: 8, marginTop: 4 }}
         />
       </div>
-      <div style={{ marginBottom: 16 }}>
+      <div>
         <label htmlFor="subject">Subject:</label>
         <input
           id="subject"
@@ -59,7 +58,6 @@ const EmailBuilder: React.FC = () => {
           placeholder="Enter subject"
           value={subject}
           onChange={e => setSubject(e.target.value)}
-          style={{ width: '100%', padding: 8, marginTop: 4 }}
         />
       </div>
       {/* Unlayer email editor for designing email content */}
@@ -68,11 +66,11 @@ const EmailBuilder: React.FC = () => {
       </div>
       {/* Send button and status message below the editor */}
       <div style={{ marginTop: 24 }}>
-        <button style={{ padding: '10px 24px', fontSize: 16 }} onClick={handleSend} disabled={!recipient || !htmlContent || !subject}>
+        <button onClick={handleSend} disabled={!recipient || !htmlContent || !subject}>
           Send Email
         </button>
         {/* Status message for success or error */}
-        {status && <div style={{ marginTop: 16 }}>{status}</div>}
+        {status && <div className="status-message">{status}</div>}
       </div>
     </div>
   );

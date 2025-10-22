@@ -28,15 +28,16 @@ interface UnlayerEmailEditorProps {
  */
 
 const UnlayerEmailEditor: React.FC<UnlayerEmailEditorProps> = ({ onHtmlExport }) => {
-  // Generate a unique id for this editor instance
-  const uniqueIdRef = useRef(`unlayer-editor-${Math.random().toString(36).substr(2, 9)}`);
+  // Use a static id for the editor container
+  const EDITOR_ID = 'unlayer-editor-root';
   const editorRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Load Unlayer script if not already loaded
+    // Only initialize if not already present
     const initEditor = () => {
+      if (!window.unlayer || document.getElementById(EDITOR_ID)?.children.length) return;
       window.unlayer.init({
-        id: uniqueIdRef.current,
+        id: EDITOR_ID,
         displayMode: 'email',
       });
     };
@@ -49,6 +50,7 @@ const UnlayerEmailEditor: React.FC<UnlayerEmailEditorProps> = ({ onHtmlExport })
     } else {
       initEditor();
     }
+    // No destroy on unmount to avoid breaking global singleton
   }, []);
 
 
@@ -63,8 +65,8 @@ const UnlayerEmailEditor: React.FC<UnlayerEmailEditorProps> = ({ onHtmlExport })
 
   return (
     <div>
-      {/* Unlayer editor container with unique id */}
-      <div id={uniqueIdRef.current} ref={editorRef} style={{ height: 400, marginBottom: 16 }} />
+      {/* Unlayer editor container with static id */}
+      <div id={EDITOR_ID} ref={editorRef} style={{ height: 400, marginBottom: 16 }} />
       {/* Export button triggers HTML export */}
       <button type="button" onClick={handleExport} style={{ marginTop: 8 }}>
         Use This Design
