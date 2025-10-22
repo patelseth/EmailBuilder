@@ -15,7 +15,6 @@ namespace EmailBuilderApi.Api.Controllers
     [Route("api/[controller]")]
     public class EmailController(IEmailSenderService emailSenderService) : ControllerBase
     {
-
         /// <summary>
         /// Sends an email using the provided HTML content and recipient address.
         /// </summary>
@@ -24,7 +23,13 @@ namespace EmailBuilderApi.Api.Controllers
         [HttpPost("send")]
         public async Task<IActionResult> SendEmail([FromBody] SendEmailRequest request)
         {
-            await emailSenderService.SendEmailAsync(request.HtmlContent, request.Recipient, null, null, null, null);
+            await emailSenderService.SendEmailAsync(
+                request.HtmlContent,
+                request.Recipient,
+                request.Subject,
+                request.Cc,
+                request.Bcc,
+                request.Attachments);
             return Ok();
         }
     }

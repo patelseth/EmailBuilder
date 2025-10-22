@@ -1,6 +1,5 @@
 namespace EmailBuilderApi.Application
 {
-
     /// <summary>
     /// Service responsible for sending emails using an injected email client.
     /// Adheres to Single Responsibility Principle (SRP) and Dependency Inversion Principle (DIP).
@@ -19,7 +18,7 @@ namespace EmailBuilderApi.Application
         /// <param name="subject">The subject of the email.</param>
         /// <param name="cc">CC recipients.</param>
         /// <param name="bcc">BCC recipients.</param>
-        public async Task SendEmailAsync(string htmlContent, string recipient, string? subject, string[]? cc, string[]? bcc, EmailAttachment[]? attachments)
+        public async Task SendEmailAsync(string htmlContent, string recipient, string? subject, List<string>? cc, List<string>? bcc, List<EmailAttachment>? attachments)
         {
             // Trim whitespace from recipient
             recipient = recipient.Trim();

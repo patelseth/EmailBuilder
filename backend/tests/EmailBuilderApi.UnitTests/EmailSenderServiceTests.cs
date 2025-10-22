@@ -130,8 +130,8 @@ namespace EmailBuilderApi.UnitTests
             var htmlContent = "<h1>Hello</h1>";
             var recipient = "test@example.com";
             var subject = "Test Subject";
-            var cc = new[] { "cc1@example.com", "cc2@example.com" };
-            var bcc = new[] { "bcc1@example.com" };
+            var cc = new List<string> { "cc1@example.com", "cc2@example.com" };
+            var bcc = new List<string> { "bcc1@example.com" };
 
             // Act
             await service.SendEmailAsync(htmlContent, recipient, subject, cc, bcc, null);
@@ -152,10 +152,10 @@ namespace EmailBuilderApi.UnitTests
             var htmlContent = "<h1>Hello</h1>";
             var recipient = "test@example.com";
             var subject = "Test Subject";
-            var cc = new[] { "cc1@example.com" };
-            var bcc = new[] { "bcc1@example.com" };
-            var attachments = new[] {
-                new EmailAttachment { FileName = "file.txt", Content = [1, 2, 3], MimeType = "text/plain" }
+            var cc = new List<string> { "cc1@example.com" };
+            var bcc = new List<string> { "bcc1@example.com" };
+            var attachments = new List<EmailAttachment> {
+                new() { FileName = "file.txt", Content = [1, 2, 3], MimeType = "text/plain" }
             };
 
             // Act

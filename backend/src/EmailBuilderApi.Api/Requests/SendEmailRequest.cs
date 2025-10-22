@@ -14,5 +14,25 @@ namespace EmailBuilderApi.Api.Requests
         /// The recipient's email address.
         /// </summary>
         public required string Recipient { get; set; }
+
+        /// <summary>
+        /// The subject of the email.
+        /// </summary>
+        public string? Subject { get; set; }
+
+        /// <summary>
+        /// The CC (carbon copy) recipients.
+        /// </summary>
+        public List<string>? Cc { get; set; }
+
+        /// <summary>
+        /// The BCC (blind carbon copy) recipients.
+        /// </summary>
+        public List<string>? Bcc { get; set; }
+
+        /// <summary>
+        /// The attachments to include in the email.
+        /// </summary>
+        public List<EmailBuilderApi.Application.EmailAttachment>? Attachments { get; set; }
     }
 }

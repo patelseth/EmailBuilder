@@ -13,5 +13,5 @@ public interface IEmailSenderService
     /// <param name="subject">The subject of the email.</param>
     /// <param name="cc">CC recipients.</param>
     /// <param name="bcc">BCC recipients.</param>
-    Task SendEmailAsync(string htmlContent, string recipient, string? subject, string[]? cc, string[]? bcc, EmailAttachment[]? attachments);
+    Task SendEmailAsync(string htmlContent, string recipient, string? subject, List<string>? cc, List<string>? bcc, List<EmailAttachment>? attachments);
 }
