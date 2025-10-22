@@ -19,7 +19,7 @@ namespace EmailBuilderApi.Application
         /// <param name="subject">The subject of the email.</param>
         /// <param name="cc">CC recipients.</param>
         /// <param name="bcc">BCC recipients.</param>
-    public async Task SendEmailAsync(string htmlContent, string recipient, string? subject, string[]? cc, string[]? bcc)
+        public async Task SendEmailAsync(string htmlContent, string recipient, string? subject, string[]? cc, string[]? bcc, EmailAttachment[]? attachments)
         {
             // Trim whitespace from recipient
             recipient = recipient.Trim();
@@ -43,7 +43,7 @@ namespace EmailBuilderApi.Application
                 throw new ArgumentException("Email HTML content must not be empty.", nameof(htmlContent));
 
             // Delegates the actual sending to the injected client, supporting OCP and testability.
-            await emailSenderClient.SendEmailAsync(htmlContent, recipient, subject, cc, bcc);
+            await emailSenderClient.SendEmailAsync(htmlContent, recipient, subject, cc, bcc, attachments);
         }
     }
 }

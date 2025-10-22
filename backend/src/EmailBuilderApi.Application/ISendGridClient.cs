@@ -14,6 +14,6 @@ namespace EmailBuilderApi.Application
         /// <param name="subject">The subject of the email.</param>
         /// <param name="cc">CC recipients.</param>
         /// <param name="bcc">BCC recipients.</param>
-        Task SendEmailAsync(string htmlContent, string recipient, string? subject, string[]? cc, string[]? bcc);
+        Task SendEmailAsync(string htmlContent, string recipient, string? subject, string[]? cc, string[]? bcc, EmailAttachment[]? attachments);
     }
 }
