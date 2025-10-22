@@ -1,5 +1,7 @@
 using Moq;
 using EmailBuilderApi.Application;
+using EmailBuilderApi.Domain.Models;
+using EmailBuilderApi.Application.Interfaces;
 
 namespace EmailBuilderApi.UnitTests
 {

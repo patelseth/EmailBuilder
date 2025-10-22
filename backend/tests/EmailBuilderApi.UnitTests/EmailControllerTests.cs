@@ -1,8 +1,9 @@
 using Moq;
 using Microsoft.AspNetCore.Mvc;
-using EmailBuilderApi.Application;
 using EmailBuilderApi.Api.Controllers;
 using EmailBuilderApi.Api.Requests;
+using EmailBuilderApi.Domain.Models;
+using EmailBuilderApi.Application.Interfaces;
 
 namespace EmailBuilderApi.UnitTests
 {

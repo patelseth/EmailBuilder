@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using EmailBuilderApi.Application;
 using EmailBuilderApi.Api.Requests;
+using EmailBuilderApi.Application.Interfaces;
 
 namespace EmailBuilderApi.Api.Controllers
 {

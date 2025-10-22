@@ -1,3 +1,5 @@
+using EmailBuilderApi.Domain.Models;
+
 namespace EmailBuilderApi.Api.Requests
 {
     /// <summary>
@@ -33,6 +35,6 @@ namespace EmailBuilderApi.Api.Requests
         /// <summary>
         /// The attachments to include in the email.
         /// </summary>
-        public List<EmailBuilderApi.Application.EmailAttachment>? Attachments { get; set; }
+        public List<EmailAttachment>? Attachments { get; set; }
     }
 }

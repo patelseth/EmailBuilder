@@ -1,3 +1,6 @@
+using EmailBuilderApi.Application.Interfaces;
+using EmailBuilderApi.Domain.Models;
+
 namespace EmailBuilderApi.Application
 {
     /// <summary>

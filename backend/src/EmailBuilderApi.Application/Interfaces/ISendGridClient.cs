@@ -1,4 +1,6 @@
-namespace EmailBuilderApi.Application
+using EmailBuilderApi.Domain.Models;
+
+namespace EmailBuilderApi.Application.Interfaces
 {
     /// <summary>
     /// Abstraction for sending emails via any provider (e.g., SendGrid).
