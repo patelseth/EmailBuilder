@@ -1,5 +1,5 @@
 using Moq;
-using EmailBuilderApi.Application;
+using EmailBuilderApi.Application.Services;
 using EmailBuilderApi.Domain.Models;
 using EmailBuilderApi.Application.Interfaces;
 
