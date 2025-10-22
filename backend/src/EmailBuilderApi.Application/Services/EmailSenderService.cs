@@ -1,7 +1,7 @@
 using EmailBuilderApi.Application.Interfaces;
 using EmailBuilderApi.Domain.Models;
 
-namespace EmailBuilderApi.Application
+namespace EmailBuilderApi.Application.Services
 {
     /// <summary>
     /// Service responsible for sending emails using an injected email client.
