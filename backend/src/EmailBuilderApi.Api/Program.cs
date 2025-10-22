@@ -1,5 +1,5 @@
-using EmailBuilderApi.Application;
 using EmailBuilderApi.Application.Interfaces;
+using EmailBuilderApi.Application.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
