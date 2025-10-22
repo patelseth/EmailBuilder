@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.RateLimiting;
 using EmailBuilderApi.Application.Interfaces;
 using EmailBuilderApi.Application.Services;
 
@@ -6,6 +7,18 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddOpenApi();
 builder.Services.AddControllers();
+
+// Add a simple fixed window rate limiter (100 requests per 1 minute per IP)
+builder.Services.AddRateLimiter(options =>
+{
+    options.AddFixedWindowLimiter("fixed", o =>
+    {
+        o.Window = TimeSpan.FromMinutes(1);
+        o.PermitLimit = 100;
+        o.QueueProcessingOrder = System.Threading.RateLimiting.QueueProcessingOrder.OldestFirst;
+        o.QueueLimit = 0;
+    });
+});
 
 // Allow requests from React development server
 builder.Services.AddCors(options =>
@@ -32,5 +45,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseCors("AllowReactDev");
 app.UseHttpsRedirection();
-app.MapControllers();
+
+// Enable rate limiting globally
+app.UseRateLimiter();
+
+app.MapControllers().RequireRateLimiting("fixed");
 app.Run();
