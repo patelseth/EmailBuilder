@@ -19,10 +19,10 @@ namespace EmailBuilderApi.UnitTests
             var recipient = "test@example.com";
 
             // Act
-            await service.SendEmailAsync(htmlContent, recipient);
+            await service.SendEmailAsync(htmlContent, recipient, null, null, null);
 
             // Assert
-            mockEmailSenderClient.Verify(x => x.SendEmailAsync(htmlContent, recipient), Times.Once);
+            mockEmailSenderClient.Verify(x => x.SendEmailAsync(htmlContent, recipient, null, null, null), Times.Once);
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace EmailBuilderApi.UnitTests
             var recipient = string.Empty;
 
             // Act & Assert
-            await Assert.ThrowsAsync<ArgumentException>(() => service.SendEmailAsync(htmlContent, recipient));
+            await Assert.ThrowsAsync<ArgumentException>(() => service.SendEmailAsync(htmlContent, recipient, null, null, null));
         }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace EmailBuilderApi.UnitTests
             var recipient = "test@example.com";
 
             // Act & Assert
-            await Assert.ThrowsAsync<ArgumentException>(() => service.SendEmailAsync(htmlContent, recipient));
+            await Assert.ThrowsAsync<ArgumentException>(() => service.SendEmailAsync(htmlContent, recipient, null, null, null));
         }
 
         /// <summary>
@@ -71,11 +71,11 @@ namespace EmailBuilderApi.UnitTests
             var expectedException = new InvalidOperationException("Provider failure");
 
             mockEmailSenderClient
-                .Setup(x => x.SendEmailAsync(htmlContent, recipient))
+                .Setup(x => x.SendEmailAsync(htmlContent, recipient, null, null, null))
                 .ThrowsAsync(expectedException);
 
             // Act & Assert
-            var ex = await Assert.ThrowsAsync<InvalidOperationException>(() => service.SendEmailAsync(htmlContent, recipient));
+            var ex = await Assert.ThrowsAsync<InvalidOperationException>(() => service.SendEmailAsync(htmlContent, recipient, null, null, null));
             Assert.Equal(expectedException, ex);
         }
 
@@ -96,7 +96,7 @@ namespace EmailBuilderApi.UnitTests
             var htmlContent = "<h1>Hello</h1>";
 
             // Act & Assert
-            await Assert.ThrowsAsync<ArgumentException>(() => service.SendEmailAsync(htmlContent, invalidRecipient));
+            await Assert.ThrowsAsync<ArgumentException>(() => service.SendEmailAsync(htmlContent, invalidRecipient, null, null, null));
         }
 
         /// <summary>
@@ -112,10 +112,10 @@ namespace EmailBuilderApi.UnitTests
             var recipient = "   test@example.com   ";
 
             // Act
-            await service.SendEmailAsync(htmlContent, recipient);
+            await service.SendEmailAsync(htmlContent, recipient, null, null, null);
 
             // Assert
-            mockEmailSenderClient.Verify(x => x.SendEmailAsync(htmlContent, "test@example.com"), Times.Once);
+            mockEmailSenderClient.Verify(x => x.SendEmailAsync(htmlContent, "test@example.com", null, null, null), Times.Once);
         }
 
         /// <summary>

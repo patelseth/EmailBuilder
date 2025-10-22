@@ -12,14 +12,17 @@ namespace EmailBuilderApi.Application
     public class EmailSenderService(IEmailSenderClient emailSenderClient) : IEmailSenderService
     {
         /// <summary>
-        /// Sends an email with the provided HTML content to the recipient.
+        /// Sends an email with the provided HTML content, subject, and recipients.
         /// </summary>
         /// <param name="htmlContent">The HTML body of the email.</param>
         /// <param name="recipient">The recipient's email address.</param>
-        public async Task SendEmailAsync(string htmlContent, string? recipient)
+        /// <param name="subject">The subject of the email.</param>
+        /// <param name="cc">CC recipients.</param>
+        /// <param name="bcc">BCC recipients.</param>
+    public async Task SendEmailAsync(string htmlContent, string recipient, string? subject, string[]? cc, string[]? bcc)
         {
             // Trim whitespace from recipient
-            recipient = recipient?.Trim();
+            recipient = recipient.Trim();
 
             // Validate recipient
             if (string.IsNullOrWhiteSpace(recipient))
@@ -40,7 +43,7 @@ namespace EmailBuilderApi.Application
                 throw new ArgumentException("Email HTML content must not be empty.", nameof(htmlContent));
 
             // Delegates the actual sending to the injected client, supporting OCP and testability.
-            await emailSenderClient.SendEmailAsync(htmlContent, recipient);
+            await emailSenderClient.SendEmailAsync(htmlContent, recipient, subject, cc, bcc);
         }
     }
 }
