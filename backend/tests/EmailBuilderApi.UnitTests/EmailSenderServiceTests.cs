@@ -139,5 +139,30 @@ namespace EmailBuilderApi.UnitTests
             // Assert
             mockEmailSenderClient.Verify(x => x.SendEmailAsync(htmlContent, recipient, subject, cc, bcc), Times.Once);
         }
+
+                /// <summary>
+        /// Should pass attachments to the email provider.
+        /// </summary>
+        [Fact]
+        public async Task SendEmailAsync_PassesAttachmentsToProvider()
+        {
+            // Arrange
+            var mockEmailSenderClient = new Mock<IEmailSenderClient>();
+            var service = new EmailSenderService(mockEmailSenderClient.Object);
+            var htmlContent = "<h1>Hello</h1>";
+            var recipient = "test@example.com";
+            var subject = "Test Subject";
+            var cc = new[] { "cc1@example.com" };
+            var bcc = new[] { "bcc1@example.com" };
+            var attachments = new[] {
+                new EmailAttachment { FileName = "file.txt", Content = new byte[] { 1, 2, 3 }, MimeType = "text/plain" }
+            };
+
+            // Act
+            await service.SendEmailAsync(htmlContent, recipient, subject, cc, bcc, attachments);
+
+            // Assert
+            mockEmailSenderClient.Verify(x => x.SendEmailAsync(htmlContent, recipient, subject, cc, bcc, attachments), Times.Once);
+        }
     }
 }
