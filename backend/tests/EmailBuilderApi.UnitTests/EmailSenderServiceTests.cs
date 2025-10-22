@@ -117,5 +117,27 @@ namespace EmailBuilderApi.UnitTests
             // Assert
             mockEmailSenderClient.Verify(x => x.SendEmailAsync(htmlContent, "test@example.com"), Times.Once);
         }
+
+        /// <summary>
+        /// Should pass subject, CC, and BCC to the email provider.
+        /// </summary>
+        [Fact]
+        public async Task SendEmailAsync_PassesSubjectCcBccToProvider()
+        {
+            // Arrange
+            var mockEmailSenderClient = new Mock<IEmailSenderClient>();
+            var service = new EmailSenderService(mockEmailSenderClient.Object);
+            var htmlContent = "<h1>Hello</h1>";
+            var recipient = "test@example.com";
+            var subject = "Test Subject";
+            var cc = new[] { "cc1@example.com", "cc2@example.com" };
+            var bcc = new[] { "bcc1@example.com" };
+
+            // Act
+            await service.SendEmailAsync(htmlContent, recipient, subject, cc, bcc);
+
+            // Assert
+            mockEmailSenderClient.Verify(x => x.SendEmailAsync(htmlContent, recipient, subject, cc, bcc), Times.Once);
+        }
     }
 }
